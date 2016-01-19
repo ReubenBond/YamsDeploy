@@ -1,6 +1,8 @@
 # YamsDeploy
 Simple command line tool for deploying applications to a [Yams](https://github.com/Microsoft/Yams) cluster.
 
+[![Join the chat at https://gitter.im/Microsoft/Yams](https://badges.gitter.im/Microsoft/Yams.svg)](https://gitter.im/Microsoft/Yams?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+
 ## Features
 * Auto-increment version numbers
 * Uploads only changed files: unchanged files are copied from previous application versions and other deployed applications.
