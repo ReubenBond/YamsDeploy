@@ -1,5 +1,5 @@
 # YamsDeploy
-Simple command line tool for deploying applications to a Microsoft/Yams cluster.
+Simple command line tool for deploying applications to a [Yams](https://github.com/Microsoft/Yams) cluster.
 
 ## Features
 * Auto-increment version numbers
