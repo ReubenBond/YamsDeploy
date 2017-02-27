@@ -6,6 +6,6 @@ namespace Deploy
     {
         public string Id { get; set; }
         public string Version { get; set; }
-        public List<string> DeploymentIds { get; set; }
+        public List<string> TargetClusters { get; set; }
     }
 }

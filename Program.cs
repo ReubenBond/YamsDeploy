@@ -17,8 +17,8 @@
     [ArgExceptionBehavior(ArgExceptionPolicy.StandardExceptionHandling)]
     public class Arguments
     {
-        [ArgDescription("The DeploymentId of the Yams cluster."), ArgRequired]
-        public string DeploymentId { get; set; }
+        [ArgDescription("The ClusterId of the Yams cluster."), ArgRequired]
+        public string ClusterId { get; set; }
 
         [ArgDescription("The Azure Storage connection string"), ArgRequired]
         public string ConnectionString { get; set; }
@@ -47,7 +47,7 @@
             {
                 var parsedArgs = Args.Parse<Arguments>(args);
                 var deploymentMapping = GetApplicationMapping(parsedArgs);
-                Run(deploymentMapping, parsedArgs.DeploymentId, parsedArgs.ConnectionString).Wait();
+                Run(deploymentMapping, parsedArgs.ClusterId, parsedArgs.ConnectionString).Wait();
             }
             catch (Exception exception)
             {
@@ -55,10 +55,10 @@
             }
         }
 
-        private static async Task Run(IEnumerable<ApplicationMapping> applications, string deploymentId, string storageConnectionString)
+        private static async Task Run(IEnumerable<ApplicationMapping> applications, string clusterId, string storageConnectionString)
         {
             var stopwatch = Stopwatch.StartNew();
-            Console.WriteLine($"Environment: {deploymentId}");
+            Console.WriteLine($"Environment: {clusterId}");
             var manager = new YamsApplicationManager(storageConnectionString);
             var cancellationToken = CancellationToken.None;
 
@@ -113,14 +113,14 @@
                     }
 
                     // Add the deployment id.
-                    if (app.DeploymentIds == null)
+                    if (app.TargetClusters == null)
                     {
-                        app.DeploymentIds = new List<string> { deploymentId };
+                        app.TargetClusters = new List<string> { clusterId };
                         updated = true;
                     }
-                    else if (!app.DeploymentIds.Contains(deploymentId))
+                    else if (!app.TargetClusters.Contains(clusterId))
                     {
-                        app.DeploymentIds.Add(deploymentId);
+                        app.TargetClusters.Add(clusterId);
                         updated = true;
                     }
 
@@ -134,7 +134,7 @@
                     deploymentConfig.Applications.Add(
                         new ApplicationDeploymentConfig
                         {
-                            DeploymentIds = new List<string> { deploymentId },
+                            TargetClusters = new List<string> { clusterId },
                             Id = application.Id,
                             Version = updatedVersionString
                         });
@@ -197,8 +197,8 @@
                     new ApplicationMapping
                     {
                         Id = args.Id,
-                        SourceDirectory = args.SourceDirectory,
-                        Version = new Version(args.Version)
+                        SourceDirectory = args.SourceDirectory.TrimEnd('\\', '/'),
+                        Version = String.IsNullOrWhiteSpace(args.Version) ? null : new Version(args.Version)
                     }
                 };
             }

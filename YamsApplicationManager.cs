@@ -587,7 +587,7 @@
                 var localFile = file.Replace('/', Path.DirectorySeparatorChar);
                 var fullPath = Path.Combine(rootDirectory, localFile);
                 Console.WriteLine($"Uploading {file} from file {localFile}.");
-                await blob.UploadFromFileAsync(fullPath, FileMode.Open, null, BlobRequestOptions, null, token);
+                await blob.UploadFromFileAsync(fullPath, AccessCondition.GenerateEmptyCondition(), BlobRequestOptions, null, token);
                 Console.WriteLine($"Uploaded {file} from file {localFile}.");
             }
             catch (StorageException ex)
