@@ -14,8 +14,8 @@ Simple command line tool for deploying applications to a [Yams](https://github.c
 Usage - Deploy -options
 
 GlobalOption             Description
-ClusterId* (-Cl)          The ClusterId of the Yams cluster.
-ConnectionString* (-Co)   The Azure Storage connection string
+ClusterId* (-Cl)         The ClusterId of the Yams cluster.
+ConnectionString* (-Co)  The Azure Storage connection string
 Version (-V)             The version to upload.
 Id (-I)                  The application identifier.
 SourceDirectory (-S)     The local directory containing the application.
